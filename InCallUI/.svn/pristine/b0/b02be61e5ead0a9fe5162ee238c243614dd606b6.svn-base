@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2013 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License
+  -->
+
+<!-- In-call onscreen touch UI elements, used on some platforms.
+
+     This layout is a fullscreen overlay, drawn on top of the
+     non-touch-sensitive parts of the in-call UI (i.e. the call card).
+
+     The top-level View here is a InCallTouchUi (FrameLayout) with 2 children:
+       (1) inCallControls: the widgets visible while a regular call (or calls) is in progress
+       (2) incomingCallWidget: the UI displayed while an incoming call is ringing
+     In usual cases, one of these is visible at any given moment.
+     One exception is when incomingCallWidget is fading-out. At that moment, we show
+     inCallControls beneath incomingCallWidget for smoother transition.
+     -->
+
+<!-- Main cluster of onscreen buttons on the lower part of the screen. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottomButtons"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_margin="0dp"
+    android:padding="0dp"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:animateLayoutChanges="true"
+    android:gravity="bottom|center_horizontal"
+    android:visibility="invisible" >
+
+    <!-- M: ALPS01844813 callButtonContainer id is used for RCSe plugin -->
+    <!-- BEGIN BOWAY, yulong.tan, 20150422, InCall UI. -->
+    <LinearLayout
+        android:id="@+id/callButtonContainer"
+        android:layout_width="318dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <!-- This row only ever shows either 4 or 5 buttons. This may depend on whether the device
+             supports "Hold" (i.e. 4 buttons on CDMA devices, 5 buttons on GSM devices.) or whether
+             it is in a video call.
+
+             There are a couple of *pairs* of buttons that share a single "slot", namely Hold/Swap
+             and Add/Merge.  For these, the code in InCallTouchUi is responsible for making sure
+             that at any point exactly one of the pair is VISIBLE and the other is GONE.
+
+             If there are more than 5 buttons eligible to be shown, the presenter is responsible for
+             collapsing those options into an overflow menu, which appears as one of the buttons
+             in the row instead. -->
+
+        <LinearLayout
+            android:id="@+id/moreButtonContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/simple_folding_page_img"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <!-- This slot is either "Hold" or "Swap", depending on the state of the call. One or the
+             other of these must always be set to GONE. -->
+            <!-- "Hold" -->
+            <ToggleButton
+                android:id="@+id/holdButton"
+                style="@style/SimpleInCallCompoundButton"
+                android:background="@drawable/simple_btn_compound_hold"
+                android:contentDescription="@string/onscreenHoldText"
+                android:textOn="@string/onscreenHoldText"
+                android:textOff="@string/onscreenHoldText" />
+
+            <!-- "Swap" (or "Manage calls" in some CDMA states) -->
+            <ImageButton
+                android:id="@+id/swapButton"
+                style="@style/InCallButton"
+                android:background="@drawable/btn_swap"
+                android:contentDescription="@string/onscreenSwapCallsText"
+                android:visibility="gone" />
+
+            <!-- "Change to video call" -->
+            <ImageButton
+                android:id="@+id/changeToVideoButton"
+                style="@style/InCallButton"
+                android:background="@drawable/btn_change_to_video"
+                android:contentDescription="@string/onscreenVideoCallText"
+                android:visibility="gone" />
+
+            <!-- "Switch camera" for video calls. -->
+            <ToggleButton
+                android:id="@+id/switchCameraButton"
+                style="@style/InCallCompoundButton"
+                android:background="@drawable/btn_compound_video_switch"
+                android:contentDescription="@string/onscreenSwitchCameraText"
+                android:visibility="gone" />
+            <!-- MIDDLE LEFT SLOT ================================================================= -->
+            <ToggleButton
+                android:id="@+id/recordButton"
+                style="@style/SimpleInCallCompoundButton"
+                android:background="@drawable/simple_btn_compound_record"
+                android:contentDescription="@string/onscreenRecordText"
+                android:textOff="@string/onscreenRecordText"
+                android:textOn="@string/onscreenRecordText" />
+            
+            <!-- MIDDLE RIGHT SLOT ================================================================= -->
+            <!-- "Mute" -->
+            <ToggleButton
+                android:id="@+id/muteButton"
+                style="@style/SimpleInCallCompoundButton"
+                android:background="@drawable/simple_btn_compound_mute"
+                android:contentDescription="@string/onscreenMuteText"
+                android:textOn="@string/onscreenMuteText"
+                android:textOff="@string/onscreenMuteText" />
+
+        </LinearLayout>
+        
+        <ImageView 
+            android:layout_width="305dp"
+            android:layout_height="1dp"
+            android:background="@drawable/simple_split_line_img"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <!-- "Audio mode". this is a multi-mode button that can behave either like a simple
+             "compound button" with two states *or* like an action button that brings up a popup
+             menu; see btn_compound_audio.xml and CallButtonFragment.updateAudioButtons(). -->
+            <ToggleButton
+                android:id="@+id/audioButton"
+                style="@style/SimpleInCallCompoundButton"
+                android:background="@drawable/simple_btn_compound_audio"
+                android:contentDescription="@string/onscreenAudioText"
+                android:textOn="@string/onscreenAudioText"
+                android:textOff="@string/onscreenAudioText" />
+
+            <!-- "Change to audio call" for video calls. -->
+            <ImageButton
+                android:id="@+id/changeToVoiceButton"
+                style="@style/InCallButton"
+                android:background="@drawable/btn_change_to_voice"
+                android:contentDescription="@string/onscreenChangeToVoiceText"
+                android:visibility="gone" />
+
+            <!-- MIDDLE LEFT SLOT ================================================================== -->
+            
+            <!-- "Dialpad" -->
+            <ToggleButton
+                android:id="@+id/dialpadButton"
+                style="@style/SimpleInCallCompoundButton"
+                android:background="@drawable/simple_btn_compound_dialpad"
+                android:contentDescription="@string/onscreenShowDialpadText"
+                android:textOn="@string/onscreenShowDialpadText"
+                android:textOff="@string/onscreenShowDialpadText" />
+
+            <!-- MIDDLE RIGHT SLOT ================================================================= -->
+            <ToggleButton
+                android:id="@+id/moreButton"
+                style="@style/SimpleInCallCompoundButton"
+                android:background="@drawable/simple_btn_compound_more"
+                android:contentDescription="@string/onscreenMoreText"
+                android:textOn="@string/onscreenMoreText"
+                android:textOff="@string/onscreenMoreText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" 
+            android:visibility="gone">
+
+            <!-- This slot is either "Add" or "Merge", depending on the state of the call.  One or the
+             other of these must always be set to GONE. -->
+            <!-- "Add Call" -->
+            <ToggleButton
+                android:id="@+id/addButton"
+                style="@style/InCallCompoundButton"
+                android:background="@drawable/btn_add_content"
+                android:contentDescription="@string/onscreenAddCallText"
+                android:textOn="@string/onscreenAddCallText"
+                android:textOff="@string/onscreenAddCallText"
+                android:visibility="gone" />
+
+            <!-- "Merge calls". This button is used only on GSM devices, where we know that "Add" and
+             "Merge" are never available at the same time. The "Merge" button for CDMA devices is
+             "cdmaMergeButton" above. -->
+            <ImageButton
+                android:id="@+id/mergeButton"
+                style="@style/InCallButton"
+                android:background="@drawable/btn_merge"
+                android:contentDescription="@string/onscreenMergeCallsText"
+                android:visibility="gone" />
+
+            <!-- MIDDLE LEFT SLOT ================================================================== -->
+            
+            <!-- "Switch camera" for video calls. -->
+            <ToggleButton
+                android:id="@+id/pauseVideoButton"
+                style="@style/InCallCompoundButton"
+                android:background="@drawable/btn_compound_video_off"
+                android:contentDescription="@string/onscreenPauseVideoText"
+                android:visibility="gone" />
+
+            <!-- "Overflow" -->
+            <ImageButton
+                android:id="@+id/overflowButton"
+                style="@style/InCallButton"
+                android:background="@drawable/btn_overflow"
+                android:contentDescription="@string/onscreenOverflowText"
+                android:visibility="gone" />
+        </LinearLayout>
+
+    </LinearLayout>
+    <!-- END BOWAY, yulong.tan -->
+    
+</LinearLayout>
