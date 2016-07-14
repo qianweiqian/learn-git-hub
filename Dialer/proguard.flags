@@ -17,5 +17,5 @@
 -dontwarn com.android.mtkex.chips.**
 -keep class com.android.mtkex.chips.** {*;}
 # End-for volte conference call
-
+# END BOWAY
 -verbose
