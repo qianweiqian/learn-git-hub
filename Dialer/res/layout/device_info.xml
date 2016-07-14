@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+          
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/device_base"
+            android:textColor="#CCCC66"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/baseInfo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/device_ver"
+            android:textColor="#CCCC66"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/verInfo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/device_mem"
+            android:textColor="#CCCC66"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/memInfo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/device_main_lcd"
+            android:textColor="#CCCC66"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/mainLcdInfo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/device_main_cam"
+            android:textColor="#CCCC66"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/mainCamInfo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/device_G_Sensor"
+            android:textColor="#CCCC66"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/G_SensorInfo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/device_tp_chip"
+            android:textColor="#CCCC66"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/tpChip"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/device_tp_ver"
+            android:textColor="#CCCC66"
+            android:textSize="16dp" />
+
+    <!--<TextView
+            android:id="@+id/tpVer"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+	    android:textSize="16dp" />-->
+        
+        <ImageButton
+            android:id="@+id/tpTest"
+            android:layout_width="50dp"
+            android:layout_height="45dp"
+            android:src="@drawable/tp_test_msg21xxa_icon" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/device_barcode"
+            android:textColor="#CCCC66"
+	    android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/barcode"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+	    android:textSize="16dp" />
+    
+    </LinearLayout>
+
+</ScrollView>
